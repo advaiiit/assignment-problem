@@ -74,12 +74,22 @@ public class Main {
              HungarianAlgorithm hungarianAlgorithm = new HungarianAlgorithm(dataMatrix);
         int[][] optimalAssignment = hungarianAlgorithm.findOptimalAssignment();
 
+        HashMap<String, String> assignmentOutput = new HashMap<>();
+
         if (optimalAssignment.length > 0) {
-            for (int i = 0; i < optimalAssignment.length; i++) {
+            for (int i = 0; i < 10; i++) {
+                assignmentOutput.put(indexToResource.get(optimalAssignment[i][0]), indexToJob.get(optimalAssignment[i][1]));
                 System.out.print("Row: " + optimalAssignment[i][1] + "-> Col: " + optimalAssignment[i][0] +
                         " (" + dataMatrix[optimalAssignment[i][0]][optimalAssignment[i][1]] + ")");
                 System.out.println();
             }
         }
-    }
+
+        System.out.println();
+
+        // Printing final output
+        for (Map.Entry m : assignmentOutput.entrySet()) {
+            System.out.println(m.getKey() + " -> " + m.getValue());
+        }
+     }
 }
