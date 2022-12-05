@@ -50,5 +50,18 @@ public class Main {
             }
             System.out.println();
         }
+
+        System.out.println("\n\n");
+
+        HungarianAlgorithm hungarianAlgorithm = new HungarianAlgorithm(dataMatrix);
+        int[][] optimalAssignment = hungarianAlgorithm.findOptimalAssignment();
+
+        if (optimalAssignment.length > 0) {
+            for (int i = 0; i < optimalAssignment.length; i++) {
+                System.out.print("Col: " + optimalAssignment[i][0] + "-> Row: " + optimalAssignment[i][1] +
+                        " (" + dataMatrix[optimalAssignment[i][0]][optimalAssignment[i][1]] + ")");
+                System.out.println();
+            }
+        }
     }
 }
