@@ -4,6 +4,8 @@ import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.ResultSet;
 import java.sql.Statement;
+import java.util.HashMap;
+import java.util.Map;
 
 public class Main {
     public static void main(String[] args) {
@@ -16,6 +18,8 @@ public class Main {
         ResultSet rs = null;
 
         int[][] dataMatrix = new int[10][10];
+        HashMap<Integer, String> indexToResource = new HashMap<>();
+        HashMap<Integer, String> indexToJob = new HashMap<>();
 
         try {
             Class.forName(dbDriver);
@@ -33,7 +37,9 @@ public class Main {
 
             while (rs.next()) {
                 int[] row = new int[10];
+                indexToResource.put(rows, rs.getString("resource_id"));
                 for (int i = 0; i < 10; i++) {
+                    indexToJob.put(i, rs.getString("job_id"));
                     row[i] = rs.getInt("cost");
                     rs.next();
                 }
@@ -51,9 +57,21 @@ public class Main {
             System.out.println();
         }
 
-        System.out.println("\n");
+        System.out.println();
 
-        HungarianAlgorithm hungarianAlgorithm = new HungarianAlgorithm(dataMatrix);
+        for (Map.Entry m : indexToResource.entrySet()) {
+            System.out.println(m.getKey() + " -> " + m.getValue());
+        }
+
+        System.out.println();
+
+        for (Map.Entry m : indexToJob.entrySet()) {
+            System.out.println(m.getKey() + " -> " + m.getValue());
+        }
+
+        System.out.println();
+
+             HungarianAlgorithm hungarianAlgorithm = new HungarianAlgorithm(dataMatrix);
         int[][] optimalAssignment = hungarianAlgorithm.findOptimalAssignment();
 
         if (optimalAssignment.length > 0) {
